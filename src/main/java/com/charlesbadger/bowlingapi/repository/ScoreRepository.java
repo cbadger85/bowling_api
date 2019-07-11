@@ -6,17 +6,17 @@ import com.charlesbadger.bowlingapi.model.Player;
 import java.util.*;
 
 public class ScoreRepository {
-    private static ScoreRepository single_instance = null;
+    private static ScoreRepository singleInstance = null;
     private Map<String, Player> scoreMap = new HashMap<>();
 
     private ScoreRepository() {}
 
     public static ScoreRepository getInstance()
     {
-        if (single_instance == null)
-            single_instance = new ScoreRepository();
+        if (singleInstance == null)
+            singleInstance = new ScoreRepository();
 
-        return single_instance;
+        return singleInstance;
     }
 
     public List<Player> getScores() {
