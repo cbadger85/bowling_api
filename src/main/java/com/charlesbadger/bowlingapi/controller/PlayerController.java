@@ -14,10 +14,6 @@ public class PlayerController {
         return scoreRepository.createPlayer(player);
     }
 
-    @PostMapping("/player/{player}/score")
-    public ScoreDTO addPlayerScore(@PathVariable String player, @RequestBody ScoreDTO scoreDTO) {
-        scoreDTO.setPlayer(player);
-        return scoreDTO;
-    }
+
 
 }
