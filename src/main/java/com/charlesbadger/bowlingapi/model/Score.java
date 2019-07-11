@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class Player {
+public class Score {
     String id;
     String playerNme;
     List<Frame> frames;

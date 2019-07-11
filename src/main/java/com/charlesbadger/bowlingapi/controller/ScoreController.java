@@ -1,7 +1,7 @@
 package com.charlesbadger.bowlingapi.controller;
 
 import com.charlesbadger.bowlingapi.dto.ScoreDTO;
-import com.charlesbadger.bowlingapi.model.Player;
+import com.charlesbadger.bowlingapi.model.Score;
 import com.charlesbadger.bowlingapi.repository.ScoreRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +19,7 @@ public class ScoreController {
 
 
     @GetMapping("/score")
-    public List<Player> getScores() {
+    public List<Score> getScores() {
         return scoreRepository.getScores();
     }
 }

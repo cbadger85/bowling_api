@@ -1,13 +1,13 @@
 package com.charlesbadger.bowlingapi.repository;
 
 import com.charlesbadger.bowlingapi.model.Frame;
-import com.charlesbadger.bowlingapi.model.Player;
+import com.charlesbadger.bowlingapi.model.Score;
 
 import java.util.*;
 
 public class ScoreRepository {
     private static ScoreRepository singleInstance = null;
-    private Map<String, Player> scoreMap = new HashMap<>();
+    private Map<String, Score> scoreMap = new HashMap<>();
 
     private ScoreRepository() {}
 
@@ -19,20 +19,20 @@ public class ScoreRepository {
         return singleInstance;
     }
 
-    public List<Player> getScores() {
+    public List<Score> getScores() {
         return new ArrayList<>(scoreMap.values());
     }
 
-    public Player createPlayer(Player player) {
-        validatePlayerName(player.getName());
+    public Score createPlayer(Score score) {
+        validatePlayerName(score.getPlayerNme());
         var id = UUID.randomUUID().toString();
-        player.setName(player.getName().trim());
-        player.setId(id);
-        player.setScore(0);
+        score.setPlayerNme(score.getPlayerNme().trim());
+        score.setId(id);
+        score.setScore(0);
         List<Frame> frames = new ArrayList<>();
-        player.setFrames(frames);
-        scoreMap.put(player.getName(), player);
-        return player;
+        score.setFrames(frames);
+        scoreMap.put(score.getPlayerNme(), score);
+        return score;
     }
 
     private void validatePlayerName(String name) {
