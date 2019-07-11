@@ -1,18 +1,23 @@
 package com.charlesbadger.bowlingapi.controller;
 
-import com.charlesbadger.bowlingapi.DTO.ScoreDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.charlesbadger.bowlingapi.dto.ScoreDTO;
+import com.charlesbadger.bowlingapi.model.Player;
+import com.charlesbadger.bowlingapi.repository.ScoreRepository;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class PlayerController {
-    @GetMapping("/{player}/score")
-    public ScoreDTO getPlayerScore(@PathVariable String player,
-                          @RequestParam int frame,
-                          @RequestParam int score) {
-        var scoreDTO = new ScoreDTO(player, frame, score);
+    ScoreRepository scoreRepository = ScoreRepository.getInstance();
+
+    @PostMapping("/player")
+    public Player createPlayer(@RequestBody Player player) {
+        return scoreRepository.createPlayer(player);
+    }
+
+    @PostMapping("/player/{player}/score")
+    public ScoreDTO addPlayerScore(@PathVariable String player, @RequestBody ScoreDTO scoreDTO) {
+        scoreDTO.setPlayer(player);
         return scoreDTO;
     }
+
 }

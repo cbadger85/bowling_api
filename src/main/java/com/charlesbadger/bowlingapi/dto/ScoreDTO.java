@@ -1,13 +1,13 @@
-package com.charlesbadger.bowlingapi.DTO;
+package com.charlesbadger.bowlingapi.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
 public class ScoreDTO {
     private String player;
     private int frame;
+    private int chance;
     private int score;
 }
 
