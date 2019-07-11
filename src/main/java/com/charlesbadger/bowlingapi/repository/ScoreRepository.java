@@ -26,6 +26,7 @@ public class ScoreRepository {
     public Player createPlayer(Player player) {
         validatePlayerName(player.getName());
         var id = UUID.randomUUID().toString();
+        player.setName(player.getName().trim());
         player.setId(id);
         player.setScore(0);
         List<Frame> frames = new ArrayList<>();
@@ -36,7 +37,7 @@ public class ScoreRepository {
 
     private void validatePlayerName(String name) {
         var playerList = new ArrayList<>(scoreMap.keySet());
-        if (playerList.size() > 6) {
+        if (playerList.size() >= 6) {
             throw new IllegalArgumentException("You can only have 6 players");
         }
         if (name == null || name.trim().equals("")) {
