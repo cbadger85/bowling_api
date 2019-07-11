@@ -1,4 +1,4 @@
-package com.charlesbadger.bowlingapi.model;
+package com.charlesbadger.bowlingapi.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
