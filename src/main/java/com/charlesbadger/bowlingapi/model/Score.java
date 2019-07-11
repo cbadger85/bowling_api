@@ -8,8 +8,11 @@ import java.util.List;
 @Data
 public class Score {
     String id;
-    String playerNme;
+    String playerName;
     List<Frame> frames;
-    int score;
+
+    public int getTotalScore() {
+        return 4;
+    }
 
 }

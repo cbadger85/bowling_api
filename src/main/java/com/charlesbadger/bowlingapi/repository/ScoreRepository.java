@@ -2,36 +2,27 @@ package com.charlesbadger.bowlingapi.repository;
 
 import com.charlesbadger.bowlingapi.model.Frame;
 import com.charlesbadger.bowlingapi.model.Score;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+@Repository
 public class ScoreRepository {
-    private static ScoreRepository singleInstance = null;
     private Map<String, Score> scoreMap = new HashMap<>();
 
-    private ScoreRepository() {}
-
-    public static ScoreRepository getInstance()
-    {
-        if (singleInstance == null)
-            singleInstance = new ScoreRepository();
-
-        return singleInstance;
-    }
-
     public List<Score> getScores() {
+        //TODO sort by frame number
         return new ArrayList<>(scoreMap.values());
     }
 
     public Score createPlayer(Score score) {
-        validatePlayerName(score.getPlayerNme());
+        validatePlayerName(score.getPlayerName());
         var id = UUID.randomUUID().toString();
-        score.setPlayerNme(score.getPlayerNme().trim());
+        score.setPlayerName(score.getPlayerName().trim());
         score.setId(id);
-        score.setScore(0);
         List<Frame> frames = new ArrayList<>();
         score.setFrames(frames);
-        scoreMap.put(score.getPlayerNme(), score);
+        scoreMap.put(score.getPlayerName(), score);
         return score;
     }
 
@@ -46,5 +37,37 @@ public class ScoreRepository {
         if (playerList.contains(name)) {
             throw new IllegalArgumentException("That player name already exists");
         }
+    }
+
+    public Frame addPlayerScore(String playerName, Frame frame) {
+        var playerScore = scoreMap.get(playerName);
+        if (playerScore == null) {
+            throw new PlayerNotFoundException();
+        }
+        var playerFrames = playerScore.getFrames();
+
+        if (playerFrames.size() < 10 && frame.getChanceThreePins() != 0) {
+            throw new IllegalArgumentException("You don't get 3 chances in unless it's frame 10");
+        }
+
+        if (frame.getChanceOnePins() + frame.getChanceTwoPins() > 10 && playerFrames.size() < 10) {
+            throw new IllegalArgumentException("There are only 10 pins");
+        }
+
+
+        if (frame.getChanceOnePins() + frame.getChanceTwoPins() == 10 ||
+            playerFrames.isEmpty()) {
+            frame.setFrameNumber(playerFrames.size() + 1);
+            frame.setScore(frame.getChanceOnePins() + frame.getChanceTwoPins());
+            playerFrames.add(frame);
+            return frame;
+        }
+
+       // if current frame is neither strike nor spare,
+        // loop through frames backwards, adding to a bonus score list  1 if strike, 2 if spare
+        // stop if next number is not a strike or spare.
+        // reverse bonus score list, loop through and calculate score.
+
+        return frame;
     }
 }

@@ -6,9 +6,10 @@ import lombok.Data;
 @Data
 public class ScoreDTO {
     private String player;
+    private int chanceOnePins;
+    private int chanceTwoPins;
+    private int chanceThreePins;
     private int frame;
-    private int chance;
-    private int score;
 }
 
 
