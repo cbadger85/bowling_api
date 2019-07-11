@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class Player {
     String id;
-    String name;
+    String playerNme;
     List<Frame> frames;
     int score;
 
