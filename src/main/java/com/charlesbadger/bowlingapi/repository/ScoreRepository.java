@@ -6,6 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+enum StrikeOrSpare {
+    STRIKE,
+    SPARE,
+}
+
 @Repository
 public class ScoreRepository {
     private Map<String, Score> scoreMap = new HashMap<>();
@@ -54,6 +59,7 @@ public class ScoreRepository {
             throw new IllegalArgumentException("There are only 10 pins");
         }
 
+        //TODO frame 10 logic
 
         if (frame.getChanceOnePins() + frame.getChanceTwoPins() == 10 ||
             playerFrames.isEmpty()) {
@@ -63,10 +69,16 @@ public class ScoreRepository {
             return frame;
         }
 
-       // if current frame is neither strike nor spare,
-        // loop through frames backwards, adding to a bonus score list  1 if strike, 2 if spare
-        // stop if next number is not a strike or spare.
-        // reverse bonus score list, loop through and calculate score.
+        if (playerFrames.size() == 1 &&
+                playerFrames.get(0).getChanceOnePins() + playerFrames.get(0).getChanceTwoPins() == 10
+        ) {
+                playerFrames.get(0).setScore(10 + frame.getChanceOnePins() + frame.getChanceTwoPins());
+                frame.setScore(playerFrames.get(0).getScore() + frame.getChanceOnePins() + frame.getChanceTwoPins());
+                frame.setFrameNumber(playerFrames.size() + 1);
+                playerFrames.add(frame);
+
+        }
+
 
         return frame;
     }
